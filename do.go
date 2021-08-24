@@ -4,28 +4,35 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"syscall"
 	"time"
 
 	"github.com/digitalocean/godo"
+	"golang.org/x/crypto/ssh"
+	"golang.org/x/term"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
+	fmt.Println("Provisioning Digital Ocean Droplet")
 	digitalOceanId, _ := CreateDroplet()
 	fmt.Println(digitalOceanId)
 }
 
 func CreateDroplet() (int, error) {
 	client := godo.NewFromToken(os.Getenv("DIGITAL_OCEAN_ACCESS_TOKEN"))
+	allKeys := []godo.DropletCreateSSHKey{
+		{Fingerprint: os.Getenv("SSH_FINGERPRINT")},
+	}
 
 	dropletName := "rancher.prak"
 	tags := []string{"prak"}
 
 	createRequest := &godo.DropletCreateRequest{
-		Name:   dropletName,
-		Region: "sfo3",
-		Size:   "s-2vcpu-4gb",
-		Tags:   tags,
+		Name:    dropletName,
+		Region:  "sfo3",
+		Size:    "s-2vcpu-4gb",
+		Tags:    tags,
+		SSHKeys: allKeys,
 		Image: godo.DropletCreateImage{
 			Slug: "ubuntu-20-04-x64",
 		},
@@ -40,21 +47,54 @@ func CreateDroplet() (int, error) {
 		return 0, err
 	}
 
-	WaitForDroplet(ctx, client, newDroplet.ID)
+	ipAddr := WaitForDroplet(ctx, client, newDroplet.ID)
+
+	ConnectToHost(ipAddr)
 
 	return newDroplet.ID, nil
 }
 
-func WaitForDroplet(ctx context.Context, client *godo.Client, dropletId int) {
+func WaitForDroplet(ctx context.Context, client *godo.Client, dropletId int) string {
+	var ipAddr string
 	for {
 		droplet, _, _ := client.Droplets.Get(ctx, dropletId)
 		status := droplet.Status
 		if status == "active" {
-			fmt.Println("Node is ready.")
+			ip, _ := droplet.PublicIPv4()
+			fmt.Printf("%s is ready: %s\n", droplet.Name, ip)
+			ipAddr = ip
 			break
 		} else {
-			fmt.Println("Node is not ready.")
+			fmt.Printf("%s is not ready.\n", droplet.Name)
 			time.Sleep(8 * time.Second)
 		}
 	}
+
+	return ipAddr
+}
+
+func ConnectToHost(host string) (*ssh.Client, *ssh.Session, error) {
+	fmt.Println("Password: ")
+	pass, _ := term.ReadPassword(int(syscall.Stdin))
+
+	sshConfig := &ssh.ClientConfig{
+		User: "root",
+		Auth: []ssh.AuthMethod{
+			ssh.Password(string(pass)),
+		},
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+	}
+
+	client, err := ssh.Dial("tcp", host, sshConfig)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	session, err := client.NewSession()
+	if err != nil {
+		client.Close()
+		return nil, nil, err
+	}
+
+	return client, session, nil
 }
