@@ -12,30 +12,26 @@ import (
 	"golang.org/x/term"
 )
 
-func main() {
-	fmt.Println("Provisioning Digital Ocean Droplet")
-	digitalOceanId, _ := CreateDroplet()
-	fmt.Println(digitalOceanId)
-}
-
-func CreateDroplet() (int, error) {
-	client := godo.NewFromToken(os.Getenv("DIGITAL_OCEAN_ACCESS_TOKEN"))
+func CreateDroplet(DROPLET_NAME string, DIGITAL_OCEAN_ACCESS_TOKEN string, SSH_FINGERPRINT string, REPO_URL string, REPO_BRANCH string) (int, error) {
+	client := godo.NewFromToken(DIGITAL_OCEAN_ACCESS_TOKEN)
 	allKeys := []godo.DropletCreateSSHKey{
-		{Fingerprint: os.Getenv("SSH_FINGERPRINT")},
+		{Fingerprint: SSH_FINGERPRINT},
 	}
 
-	dropletName := "rancher.prak"
-	tags := []string{"prak"}
+	// tags := []string{"tag-test"}
+	CloudInit()
+	data, _ :=  os.ReadFile("./cloud-config")
 
 	createRequest := &godo.DropletCreateRequest{
-		Name:    dropletName,
+		Name:    DROPLET_NAME,
 		Region:  "sfo3",
-		Size:    "s-2vcpu-4gb",
-		Tags:    tags,
+		Size:    "s-4vcpu-8gb",
+		// Tags:    tags,
 		SSHKeys: allKeys,
 		Image: godo.DropletCreateImage{
 			Slug: "ubuntu-20-04-x64",
 		},
+		UserData: string(data),
 	}
 
 	ctx := context.TODO()
@@ -43,7 +39,7 @@ func CreateDroplet() (int, error) {
 	newDroplet, _, err := client.Droplets.Create(ctx, createRequest)
 
 	if err != nil {
-		fmt.Printf("Something bad happened: %s\n\n", err)
+		fmt.Printf("Error: %s\n\n", err)
 		return 0, err
 	}
 
@@ -74,7 +70,7 @@ func WaitForDroplet(ctx context.Context, client *godo.Client, dropletId int) str
 }
 
 func ConnectToHost(host string) (*ssh.Client, *ssh.Session, error) {
-	fmt.Println("Password: ")
+	fmt.Println("Enter a password: ")
 	pass, _ := term.ReadPassword(int(syscall.Stdin))
 
 	sshConfig := &ssh.ClientConfig{

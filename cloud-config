@@ -1,0 +1,14 @@
+#cloud-config
+
+package_update: true
+package_upgrade: false
+
+packages:
+  - git
+
+runcmd:
+  - "curl https://releases.rancher.com/install-docker/20.10.sh | sh"
+  - "git clone --branch kubewarden https://github.com/jordojordo/dashboard.git /run/dashboard"
+  - "docker build - < /run/dashboard/Dockerfile.kubewarden -t dashboard:dev"
+  - "docker run -d --restart unless-stopped --privileged -p 80:80 -p 443:443 -e CATTLE_UI_DASHBOARD_INDEX=https://localhost/dashboard/index.html dashboard:dev"
+  - [sh, -xc, "echo $(date) ': Time to do the stuff'"]
