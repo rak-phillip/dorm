@@ -8,8 +8,8 @@ packages:
 
 runcmd:
   - "curl https://releases.rancher.com/install-docker/20.10.sh | sh"
-  - "git clone --branch <REPO_BRANCH> <REPO_URL> /run/dashboard"
-  - "wget https://raw.githubusercontent.com/jordojordo/digital-ocean-droplet-rancher/main/Dockerfile -P /run/"
-  - "docker build - < /run/Dockerfile -t dashboard:dev"
+  - "git clone --branch <REPO_BRANCH> <REPO_URL> /home/dashboard"
+  - "wget https://raw.githubusercontent.com/jordojordo/digital-ocean-droplet-rancher/main/Dockerfile -P /home"
+  - "docker build - < /home/Dockerfile -t dashboard:dev"
   - "docker run -d --restart unless-stopped --privileged -p 80:80 -p 443:443 -e CATTLE_UI_DASHBOARD_INDEX=https://localhost/dashboard/index.html dashboard:dev"
   - [sh, -xc, "echo $(date) ': Time to do the stuff'"]
