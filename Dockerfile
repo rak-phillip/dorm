@@ -2,11 +2,9 @@ FROM node:12-alpine AS builder
 
 WORKDIR /src
 
-COPY package.json /src/
-COPY yarn.lock /src/
+COPY . .
 RUN yarn --pure-lockfile install
 
-COPY . /src
 RUN yarn run build --spa
 
 FROM rancher/rancher:v2.6.4
