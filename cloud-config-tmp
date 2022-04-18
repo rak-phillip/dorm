@@ -5,12 +5,20 @@ package_upgrade: false
 
 packages:
   - git
+  - docker.io
+
+groups:
+  - docker
+
+system_info:
+  default_user:
+    groups: [docker]
 
 runcmd:
-  - "curl https://releases.rancher.com/install-docker/20.10.sh | sh"
-  - "mkdir -p /root/dashboard"
-  - "wget https://raw.githubusercontent.com/jordojordo/digital-ocean-droplet-rancher/main/Dockerfile -P /root/"
-  - "git clone --branch <REPO_BRANCH> <REPO_URL> /root/dashboard"
-  - "docker build --file /root/Dockerfile -t dashboard:dev ."
-  - "docker run -d --restart unless-stopped --privileged -p 80:80 -p 443:443 -e CATTLE_UI_DASHBOARD_INDEX=https://localhost/dashboard/index.html dashboard:dev"
+  - "mkdir -p /run/dockerfiles"
+  - "wget https://raw.githubusercontent.com/jordojordo/digital-ocean-droplet-rancher/main/Dockerfile -P /run/dockerfiles/"
+  - "git clone --branch <REPO_BRANCH> <REPO_URL> /run/dashboard"
+  - "cd /run/dashboard"
+  - "docker build -f /run/dockerfiles/Dockerfile -t <REPO_BRANCH> ."
+  - "docker run -d --restart unless-stopped --privileged -p 80:80 -p 443:443 -e CATTLE_UI_DASHBOARD_INDEX=https://localhost/dashboard/index.html <REPO_BRANCH>"
   - [sh, -xc, "echo $(date) ': Time to do the stuff'"]

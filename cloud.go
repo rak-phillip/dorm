@@ -15,7 +15,7 @@ func CloudInit() {
 
 func UpdateConfig(fileString string) {
 	f := fileString
-	f = strings.Replace(f, "<REPO_BRANCH>", REPO_BRANCH, 1)
+	f = strings.Replace(f, "<REPO_BRANCH>", REPO_BRANCH, -1)
 	f = strings.Replace(f, "<REPO_URL>", REPO_URL, 1)
 
 	data := []byte(f)
