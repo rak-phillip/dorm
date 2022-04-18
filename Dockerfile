@@ -5,6 +5,7 @@ WORKDIR /src
 COPY . .
 RUN yarn --pure-lockfile install
 
+ENV ROUTER_BASE="/dashboard"
 RUN yarn run build --spa
 
 FROM rancher/rancher:v2.6.4
