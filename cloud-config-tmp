@@ -16,7 +16,7 @@ system_info:
 
 runcmd:
   - "mkdir -p /run/dockerfiles"
-  - "wget https://raw.githubusercontent.com/jordojordo/digital-ocean-droplet-rancher/main/Dockerfile -P /run/dockerfiles/"
+  - "wget https://raw.githubusercontent.com/rak-phillip/digital-ocean-droplet-rancher/main/Dockerfile -P /run/dockerfiles/"
   - "git clone --branch <REPO_BRANCH> <REPO_URL> /run/dashboard"
   - "cd /run/dashboard"
   - "docker build -f /run/dockerfiles/Dockerfile -t <REPO_BRANCH> ."
