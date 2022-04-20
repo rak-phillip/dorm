@@ -5,9 +5,9 @@ import (
 )
 
 var DROPLET_NAME, DIGITAL_OCEAN_ACCESS_TOKEN, SSH_FINGERPRINT string
-var REPO_URL, REPO_BRANCH string
+var REPO_URL, REPO_BRANCH, RANCHER_VERSION string
 
-func Prompt() (string, string, string, string, string) {
+func Prompt() (string, string, string, string, string, string) {
 	fmt.Println("Give a name for your droplet:")
 	fmt.Scanln(&DROPLET_NAME)
 
@@ -17,11 +17,14 @@ func Prompt() (string, string, string, string, string) {
 	fmt.Println("The branch to build from:")
 	fmt.Scanln(&REPO_BRANCH)
 
+	fmt.Println("Rancher version:")
+	fmt.Scanln(&RANCHER_VERSION)
+
 	fmt.Println("DigitalOcean access token:")
 	fmt.Scanln(&DIGITAL_OCEAN_ACCESS_TOKEN)
 
 	fmt.Println("ssh key fingerprint:")
 	fmt.Scanln(&SSH_FINGERPRINT)
 
-	return DROPLET_NAME, DIGITAL_OCEAN_ACCESS_TOKEN, SSH_FINGERPRINT, REPO_URL, REPO_BRANCH
+	return DROPLET_NAME, DIGITAL_OCEAN_ACCESS_TOKEN, SSH_FINGERPRINT, REPO_URL, REPO_BRANCH, RANCHER_VERSION
 }

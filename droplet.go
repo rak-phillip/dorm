@@ -12,7 +12,7 @@ import (
 	"golang.org/x/term"
 )
 
-func CreateDroplet(DROPLET_NAME string, DIGITAL_OCEAN_ACCESS_TOKEN string, SSH_FINGERPRINT string, REPO_URL string, REPO_BRANCH string) (int, error) {
+func CreateDroplet(DROPLET_NAME string, DIGITAL_OCEAN_ACCESS_TOKEN string, SSH_FINGERPRINT string, REPO_URL string, REPO_BRANCH string, RANCHER_VERSION string) (int, error) {
 	client := godo.NewFromToken(DIGITAL_OCEAN_ACCESS_TOKEN)
 	allKeys := []godo.DropletCreateSSHKey{
 		{Fingerprint: SSH_FINGERPRINT},
@@ -20,12 +20,12 @@ func CreateDroplet(DROPLET_NAME string, DIGITAL_OCEAN_ACCESS_TOKEN string, SSH_F
 
 	// tags := []string{"tag-test"}
 	CloudInit()
-	data, _ :=  os.ReadFile("./cloud-config")
+	data, _ := os.ReadFile("./cloud-config")
 
 	createRequest := &godo.DropletCreateRequest{
-		Name:    DROPLET_NAME,
-		Region:  "sfo3",
-		Size:    "s-4vcpu-8gb",
+		Name:   DROPLET_NAME,
+		Region: "sfo3",
+		Size:   "s-4vcpu-8gb",
 		// Tags:    tags,
 		SSHKeys: allKeys,
 		Image: godo.DropletCreateImage{
