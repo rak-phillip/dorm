@@ -16,7 +16,7 @@ You can run the program with:
 go run .
 ```
 
-After a few questions the droplet will be created and you'll be prompted to give a root password for your droplet. The build will take around 10 minutes to complete. Once the build is completed you can access your Rancher instance at the provided IP.
+After a few questions, the droplet will be created and you'll be prompted to give a root password for your droplet. The build will take around 10 minutes to complete. Once the build is completed you can access your Rancher instance at the provided IP.
 
 > _Note_: Currently you will need to ssh into your droplet and retrieve the Bootstrap Password - anyone is welcome to fix this...
 
