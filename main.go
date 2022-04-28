@@ -8,13 +8,17 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+type Config struct {
+	dropletName    string
+	accessToken    string
+	sshFingerprint string
+	url            string
+	branch         string
+	rancherVersion string
+}
+
 func main() {
-	var dropletName string
-	var accessToken string
-	var sshFingerprint string
-	var url string
-	var branch string
-	var rancherVersion string
+	var config Config
 
 	app := &cli.App{
 		Name:  "Rancher Digital Ocean Provisioner",
@@ -24,42 +28,42 @@ func main() {
 				Name:        "droplet-name",
 				Usage:       "Name for your Droplet",
 				Required:    true,
-				Destination: &dropletName,
+				Destination: &config.dropletName,
 			},
 			&cli.StringFlag{
 				Name:        "access-token",
 				Usage:       "Digital Ocean personal access token",
 				Required:    true,
-				Destination: &accessToken,
+				Destination: &config.accessToken,
 			},
 			&cli.StringFlag{
 				Name:        "ssh-fingerprint",
 				Usage:       "Fingerprint for SSH Public Key",
 				Required:    true,
-				Destination: &sshFingerprint,
+				Destination: &config.sshFingerprint,
 			},
 			&cli.StringFlag{
 				Name:        "url",
 				Usage:       "Github url for project",
 				Required:    true,
-				Destination: &url,
+				Destination: &config.url,
 			},
 			&cli.StringFlag{
 				Name:        "branch",
 				Usage:       "Git branch provisioning target",
 				DefaultText: "master",
-				Destination: &branch,
+				Destination: &config.branch,
 			},
 			&cli.StringFlag{
 				Name:        "rancher-version",
 				Usage:       "Target version of Rancher",
 				DefaultText: "v2.6-head",
-				Destination: &rancherVersion,
+				Destination: &config.rancherVersion,
 			},
 		},
 		Action: func(c *cli.Context) error {
 			fmt.Println("Provisioning Digital Ocean Droplet...")
-			digitalOceanId, _ := CreateDroplet(dropletName, accessToken, sshFingerprint, url, branch, rancherVersion)
+			digitalOceanId, _ := CreateDroplet(&config)
 
 			fmt.Println("Your droplet as been created")
 			fmt.Println("DigitalOcean ID: ", digitalOceanId)
