@@ -8,15 +8,40 @@ This Go program will create a testable instance of [Rancher](https://github.com/
 2. DigitalOcean AccessToken
 3. SSH fingerprint - this can be found within DigitalOcean settings
 
-## How to use
+## Usage
 
-You can run the program with:
+```
+NAME:
+   do - Quickly provision Rancher setups on Digital Ocean
+
+USAGE:
+   do [global options] command [command options] [arguments...]
+
+COMMANDS:
+   help, h  Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --droplet-name value     Name for your Droplet
+   --access-token value     Digital Ocean personal access token
+   --ssh-fingerprint value  Fingerprint for SSH Public Key
+   --url value              Github url to provision (default: https://github.com/rancher/dashboard.git)
+   --branch value           Git branch to target (default: master)
+   --rancher-version value  Target version of Rancher (default: v2.6-head)
+   --help, -h               show help (default: false)
+```
+### Running the program
 
 ```sh
-go run .
+$ go build
+$ ./do --droplet-name my-first-rancher-droplet \
+--access-token { your-digital-ocean-access-token } \
+--ssh-fingerprint { your-ssh-public-key-fingerprint } \
+--url https://github.com/rak-phillip/dashboard.git \
+--branch master \
+--rancher-version v2.6-head
 ```
 
-After a few questions, the droplet will be created and you'll be prompted to give a root password for your droplet. The build will take around 10 minutes to complete. Once the build is completed you can access your Rancher instance at the provided IP.
+The droplet will be created and you'll be prompted to give a root password for your droplet. The build will take around 10 minutes to complete. Once the build is completed you can access your Rancher instance at the provided IP.
 
 > _Note_: Currently you will need to ssh into your droplet and retrieve the Bootstrap Password - anyone is welcome to fix this...
 
