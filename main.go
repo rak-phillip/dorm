@@ -21,8 +21,8 @@ func main() {
 	var config Config
 
 	app := &cli.App{
-		Name:  "Rancher Digital Ocean Provisioner",
-		Usage: "this is a nice usage instruction",
+		Name:  "do",
+		Usage: "Quickly provision Rancher setups on Digital Ocean",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "droplet-name",
@@ -44,13 +44,13 @@ func main() {
 			},
 			&cli.StringFlag{
 				Name:        "url",
-				Usage:       "Github url for project",
-				Required:    true,
+				Usage:       "Github url to provision",
+				DefaultText: "https://github.com/rancher/dashboard.git",
 				Destination: &config.url,
 			},
 			&cli.StringFlag{
 				Name:        "branch",
-				Usage:       "Git branch provisioning target",
+				Usage:       "Git branch to target",
 				DefaultText: "master",
 				Destination: &config.branch,
 			},
