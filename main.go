@@ -9,7 +9,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type Config struct {
+type doConfig struct {
 	dropletName       string
 	accessToken       string
 	sshFingerprint    string
@@ -20,7 +20,7 @@ type Config struct {
 }
 
 func main() {
-	var config Config
+	var config doConfig
 
 	app := &cli.App{
 		Name:  "do",
@@ -76,10 +76,10 @@ func main() {
 		},
 		Action: func(c *cli.Context) error {
 			fmt.Println("Provisioning Digital Ocean Droplet...")
-			digitalOceanId, ipAddr, _ := CreateDroplet(&config)
+			digitalOceanID, ipAddr, _ := createDroplet(&config)
 
 			fmt.Println("Your droplet as been created")
-			fmt.Println("DigitalOcean ID: ", digitalOceanId)
+			fmt.Println("DigitalOcean ID: ", digitalOceanID)
 			fmt.Println("IP Address: ", ipAddr)
 			fmt.Println("Bootstrap Password: ", config.bootstrapPassword)
 			return nil
