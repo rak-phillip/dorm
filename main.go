@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/google/uuid"
+	"github.com/joho/godotenv"
 	"github.com/urfave/cli/v2"
 )
 
@@ -22,6 +23,28 @@ type Config struct {
 func main() {
 	var config Config
 
+	var accessTokenRequired, sshFingerprintRequired bool
+	accessTokenRequired = false
+	sshFingerprintRequired = false
+
+	var doEnv map[string]string
+	doEnv, envErr := godotenv.Read()
+	accessToken := doEnv["DO_ENV_ACCESS_TOKEN"]
+	sshFingerprint := doEnv["DO_ENV_SSH_FINGERPRINT"]
+
+	if envErr != nil {
+		accessTokenRequired = true
+		sshFingerprintRequired = true
+	}
+
+	if accessToken == "" {
+		accessTokenRequired = true
+	}
+
+	if sshFingerprint == "" {
+		sshFingerprintRequired = true
+	}
+
 	app := &cli.App{
 		Name:  "do",
 		Usage: "Quickly provision Rancher setups on Digital Ocean",
@@ -35,14 +58,16 @@ func main() {
 			&cli.StringFlag{
 				Name:        "access-token",
 				Usage:       "Digital Ocean personal access token",
-				Required:    true,
+				Required:    accessTokenRequired,
 				Destination: &config.accessToken,
+				EnvVars:     []string{"DO_ENV_ACCESS_TOKEN"},
 			},
 			&cli.StringFlag{
 				Name:        "ssh-fingerprint",
 				Usage:       "Fingerprint for SSH Public Key",
-				Required:    true,
+				Required:    sshFingerprintRequired,
 				Destination: &config.sshFingerprint,
+				EnvVars:     []string{"DO_ENV_SSH_FINGERPRINT"},
 			},
 			&cli.StringFlag{
 				Name:        "url",
