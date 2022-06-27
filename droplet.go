@@ -4,15 +4,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"syscall"
 	"time"
 
 	"github.com/digitalocean/godo"
-	"golang.org/x/crypto/ssh"
-	"golang.org/x/term"
 )
 
-func CreateDroplet(config *Config) (int, error) {
+func CreateDroplet(config *Config) (int, string, error) {
 	client := godo.NewFromToken(config.accessToken)
 	allKeys := []godo.DropletCreateSSHKey{
 		{Fingerprint: config.sshFingerprint},
@@ -40,12 +37,12 @@ func CreateDroplet(config *Config) (int, error) {
 
 	if err != nil {
 		fmt.Printf("Error: %s\n\n", err)
-		return 0, err
+		return 0, "", err
 	}
 
 	ipAddr := WaitForDroplet(ctx, client, newDroplet.ID)
 
-	return newDroplet.ID, nil
+	return newDroplet.ID, ipAddr, nil
 }
 
 func WaitForDroplet(ctx context.Context, client *godo.Client, dropletId int) string {
@@ -65,30 +62,4 @@ func WaitForDroplet(ctx context.Context, client *godo.Client, dropletId int) str
 	}
 
 	return ipAddr
-}
-
-func ConnectToHost(host string) (*ssh.Client, *ssh.Session, error) {
-	fmt.Println("Enter a password: ")
-	pass, _ := term.ReadPassword(int(syscall.Stdin))
-
-	sshConfig := &ssh.ClientConfig{
-		User: "root",
-		Auth: []ssh.AuthMethod{
-			ssh.Password(string(pass)),
-		},
-		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
-	}
-
-	client, err := ssh.Dial("tcp", host, sshConfig)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	session, err := client.NewSession()
-	if err != nil {
-		client.Close()
-		return nil, nil, err
-	}
-
-	return client, session, nil
 }
