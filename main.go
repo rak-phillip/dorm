@@ -45,18 +45,21 @@ func main() {
 			&cli.StringFlag{
 				Name:        "url",
 				Usage:       "Github url to provision",
+				Value:       "https://github.com/rancher/dashboard.git",
 				DefaultText: "https://github.com/rancher/dashboard.git",
 				Destination: &config.url,
 			},
 			&cli.StringFlag{
 				Name:        "branch",
 				Usage:       "Git branch to target",
+				Value:       "master",
 				DefaultText: "master",
 				Destination: &config.branch,
 			},
 			&cli.StringFlag{
 				Name:        "rancher-version",
 				Usage:       "Target version of Rancher",
+				Value:       "v2.6-head",
 				DefaultText: "v2.6-head",
 				Destination: &config.rancherVersion,
 			},
