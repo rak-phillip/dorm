@@ -5,16 +5,18 @@ import (
 	"log"
 	"os"
 
+	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
 )
 
 type Config struct {
-	dropletName    string
-	accessToken    string
-	sshFingerprint string
-	url            string
-	branch         string
-	rancherVersion string
+	dropletName       string
+	accessToken       string
+	sshFingerprint    string
+	url               string
+	branch            string
+	rancherVersion    string
+	bootstrapPassword string
 }
 
 func main() {
@@ -63,6 +65,12 @@ func main() {
 				DefaultText: "v2.6-head",
 				Destination: &config.rancherVersion,
 			},
+			&cli.StringFlag{
+				Name:        "bootstrap-password",
+				Usage:       "Bootstrap password for Rancher",
+				Value:       uuid.New().String(),
+				Destination: &config.bootstrapPassword,
+			},
 		},
 		Action: func(c *cli.Context) error {
 			fmt.Println("Provisioning Digital Ocean Droplet...")
@@ -71,6 +79,7 @@ func main() {
 			fmt.Println("Your droplet as been created")
 			fmt.Println("DigitalOcean ID: ", digitalOceanId)
 			fmt.Println("IP Address: ", ipAddr)
+			fmt.Println("Bootstrap Password: ", config.bootstrapPassword)
 			return nil
 		},
 	}
