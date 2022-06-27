@@ -12,28 +12,27 @@ This Go program will create a testable instance of [Rancher](https://github.com/
 
 ```
 NAME:
-   do - Quickly provision Rancher setups on Digital Ocean
+   dorm (Digital Ocean Rancher Manager) - Quickly provision Rancher setups on Digital Ocean
 
 USAGE:
-   do [global options] command [command options] [arguments...]
-
-COMMANDS:
-   help, h  Shows a list of commands or help for one command
+   dorm [global options] command [command options] [arguments...]
 
 GLOBAL OPTIONS:
-   --droplet-name value     Name for your Droplet
-   --access-token value     Digital Ocean personal access token
-   --ssh-fingerprint value  Fingerprint for SSH Public Key
-   --url value              Github url to provision (default: https://github.com/rancher/dashboard.git)
-   --branch value           Git branch to target (default: master)
-   --rancher-version value  Target version of Rancher (default: v2.6-head)
-   --help, -h               show help (default: false)
+   --droplet-name value        Name for your Droplet
+   --access-token value        Digital Ocean personal access token (default: "c63a4d22e0724ebfc566178c8a858c7f9451240b4b41372a6e0fbaabe4d2bfb8") [$DO_ENV_ACCESS_TOKEN]
+   --ssh-fingerprint value     Fingerprint for SSH Public Key (default: "8c:96:3b:ea:4b:bc:5c:54:2b:11:20:9e:d4:30:3f:c2") [$DO_ENV_SSH_FINGERPRINT]
+   --url value                 Github url to provision (default: https://github.com/rancher/dashboard.git)
+   --branch value              Git branch to target (default: master)
+   --rancher-version value     Target version of Rancher (default: v2.6-head)
+   --bootstrap-password value  Bootstrap password for Rancher (default: "d6538231-c73a-4262-a598-5a2fc09dff58")
+   --help, -h                  show help (default: false)
+   --version, -v               print the version (default: false)
 ```
 ### Running the program
 
 ```sh
 $ go build
-$ ./do --droplet-name my-first-rancher-droplet \
+$ ./dorm --droplet-name my-first-rancher-droplet \
 --access-token { your-digital-ocean-access-token } \
 --ssh-fingerprint { your-ssh-public-key-fingerprint } \
 --url https://github.com/rak-phillip/dashboard.git \
@@ -41,9 +40,7 @@ $ ./do --droplet-name my-first-rancher-droplet \
 --rancher-version v2.6-head
 ```
 
-The droplet will be created and you'll be prompted to give a root password for your droplet. The build will take around 10 minutes to complete. Once the build is completed you can access your Rancher instance at the provided IP.
-
-> _Note_: Currently you will need to ssh into your droplet and retrieve the Bootstrap Password - anyone is welcome to fix this...
+The build will take around 10 minutes to complete. Once the build is completed you can access your Rancher instance at the provided IP.
 
 ### Accessing your instance
 
