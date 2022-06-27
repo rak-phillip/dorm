@@ -1,4 +1,4 @@
-module rancher.com/do
+module github.com/rak-phillip/dorm
 
 go 1.17
 

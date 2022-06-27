@@ -23,8 +23,20 @@ func main() {
 	var config Config
 
 	app := &cli.App{
-		Name:  "do",
-		Usage: "Quickly provision Rancher setups on Digital Ocean",
+		Name:    "dorm (Digital Ocean Rancher Manager)",
+		Version: "0.0.1",
+		Authors: []*cli.Author{
+			{
+				Name:  "Phillip Rak",
+				Email: "rak.phillip@gmail.com",
+			},
+			{
+				Name:  "Jordon Leach",
+				Email: "Jordonleach@gmail.com",
+			},
+		},
+		HelpName: "dorm",
+		Usage:    "Quickly provision Rancher setups on Digital Ocean",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "droplet-name",
