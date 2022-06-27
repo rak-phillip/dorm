@@ -21,5 +21,5 @@ runcmd:
   - "git clone --branch <REPO_BRANCH> <REPO_URL> /run/dashboard"
   - "cd /run/dashboard"
   - "docker build -f /run/dockerfiles/Dockerfile -t <REPO_BRANCH> ."
-  - "docker run -d --restart unless-stopped --privileged -p 80:80 -p 443:443 -e CATTLE_UI_DASHBOARD_INDEX=https://localhost/dashboard/index.html -e CATTLE_UI_OFFLINE_PREFERRED=true CATTLE_BOOTSTRAP_PASSWORD=<RANCHER_BOOTSTRAP_PASSWORD> <REPO_BRANCH>"
+  - "docker run -d --restart unless-stopped --privileged -p 80:80 -p 443:443 -e CATTLE_UI_DASHBOARD_INDEX=https://localhost/dashboard/index.html -e CATTLE_UI_OFFLINE_PREFERRED=true -e CATTLE_BOOTSTRAP_PASSWORD=<RANCHER_BOOTSTRAP_PASSWORD> <REPO_BRANCH>"
   - "echo $(date) ': Time to do the stuff'"
