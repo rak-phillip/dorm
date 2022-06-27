@@ -28,10 +28,19 @@ GLOBAL OPTIONS:
    --help, -h                  show help (default: false)
    --version, -v               print the version (default: false)
 ```
+### Installing dorm
+
+`dorm` requires [a supported release of Go](https://go.dev/doc/devel/release#policy).
+
+```
+$ go install github.com/rak-phillip/dorm@latest
+```
+
+To find out where `dorm` was installed you can run `go list -f {{.Target}} github.com/rak-phillip/dorm`. For `dorm` to be used globally add that directory to the `$PATH` environment setting.
+
 ### Running the program
 
 ```sh
-$ go build
 $ ./dorm --droplet-name my-first-rancher-droplet \
 --access-token { your-digital-ocean-access-token } \
 --ssh-fingerprint { your-ssh-public-key-fingerprint } \
