@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/google/uuid"
 	"github.com/urfave/cli/v2"
 )
 
@@ -64,7 +65,7 @@ func main() {
 			&cli.StringFlag{
 				Name:        "bootstrap-password",
 				Usage:       "Bootstrap password for Rancher",
-				Required:    true,
+				Value:       uuid.New().String(),
 				Destination: &config.bootstrapPassword,
 			},
 		},
@@ -75,6 +76,7 @@ func main() {
 			fmt.Println("Your droplet as been created")
 			fmt.Println("DigitalOcean ID: ", digitalOceanId)
 			fmt.Println("IP Address: ", ipAddr)
+			fmt.Println("Bootstrap Password: ", config.bootstrapPassword)
 			return nil
 		},
 	}
