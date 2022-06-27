@@ -9,12 +9,13 @@ import (
 )
 
 type Config struct {
-	dropletName    string
-	accessToken    string
-	sshFingerprint string
-	url            string
-	branch         string
-	rancherVersion string
+	dropletName       string
+	accessToken       string
+	sshFingerprint    string
+	url               string
+	branch            string
+	rancherVersion    string
+	bootstrapPassword string
 }
 
 func main() {
@@ -59,6 +60,12 @@ func main() {
 				Usage:       "Target version of Rancher",
 				DefaultText: "v2.6-head",
 				Destination: &config.rancherVersion,
+			},
+			&cli.StringFlag{
+				Name:        "bootstrap-password",
+				Usage:       "Bootstrap password for Rancher",
+				Required:    true,
+				Destination: &config.bootstrapPassword,
 			},
 		},
 		Action: func(c *cli.Context) error {
