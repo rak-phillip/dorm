@@ -19,3 +19,6 @@ cloud-config
 
 # environment variables
 *.env
+
+# build output
+dorm
