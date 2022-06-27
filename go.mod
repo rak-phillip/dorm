@@ -14,6 +14,7 @@ require (
 	github.com/golang/protobuf v1.3.5 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
+	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/urfave/cli/v2 v2.5.0 // indirect
 	golang.org/x/net v0.0.0-20200324143707-d3edc9973b7e // indirect

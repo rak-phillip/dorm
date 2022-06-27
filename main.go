@@ -35,14 +35,16 @@ func main() {
 			&cli.StringFlag{
 				Name:        "access-token",
 				Usage:       "Digital Ocean personal access token",
-				Required:    true,
+				Required:    canReadEnv("DO_ENV_ACCESS_TOKEN"),
 				Destination: &config.accessToken,
+				EnvVars:     []string{"DO_ENV_ACCESS_TOKEN"},
 			},
 			&cli.StringFlag{
 				Name:        "ssh-fingerprint",
 				Usage:       "Fingerprint for SSH Public Key",
-				Required:    true,
+				Required:    canReadEnv("DO_ENV_SSH_FINGERPRINT"),
 				Destination: &config.sshFingerprint,
+				EnvVars:     []string{"DO_ENV_SSH_FINGERPRINT"},
 			},
 			&cli.StringFlag{
 				Name:        "url",

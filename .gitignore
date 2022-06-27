@@ -16,3 +16,6 @@
 
 # cloud-config generated from build
 cloud-config
+
+# environment variables
+*.env
