@@ -45,8 +45,6 @@ func CreateDroplet(config *Config) (int, error) {
 
 	ipAddr := WaitForDroplet(ctx, client, newDroplet.ID)
 
-	ConnectToHost(ipAddr)
-
 	return newDroplet.ID, nil
 }
 
