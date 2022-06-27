@@ -63,10 +63,11 @@ func main() {
 		},
 		Action: func(c *cli.Context) error {
 			fmt.Println("Provisioning Digital Ocean Droplet...")
-			digitalOceanId, _ := CreateDroplet(&config)
+			digitalOceanId, ipAddr, _ := CreateDroplet(&config)
 
 			fmt.Println("Your droplet as been created")
 			fmt.Println("DigitalOcean ID: ", digitalOceanId)
+			fmt.Println("IP Address: ", ipAddr)
 			return nil
 		},
 	}
