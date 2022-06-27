@@ -9,14 +9,14 @@ import (
 	"github.com/digitalocean/godo"
 )
 
-func CreateDroplet(config *Config) (int, string, error) {
+func createDroplet(config *doConfig) (int, string, error) {
 	client := godo.NewFromToken(config.accessToken)
 	allKeys := []godo.DropletCreateSSHKey{
 		{Fingerprint: config.sshFingerprint},
 	}
 
 	// tags := []string{"tag-test"}
-	CloudInit(config)
+	cloudInit(config)
 	data, _ := os.ReadFile("./cloud-config")
 
 	createRequest := &godo.DropletCreateRequest{
@@ -40,15 +40,15 @@ func CreateDroplet(config *Config) (int, string, error) {
 		return 0, "", err
 	}
 
-	ipAddr := WaitForDroplet(ctx, client, newDroplet.ID)
+	ipAddr := waitForDroplet(ctx, client, newDroplet.ID)
 
 	return newDroplet.ID, ipAddr, nil
 }
 
-func WaitForDroplet(ctx context.Context, client *godo.Client, dropletId int) string {
+func waitForDroplet(ctx context.Context, client *godo.Client, dropletID int) string {
 	var ipAddr string
 	for {
-		droplet, _, _ := client.Droplets.Get(ctx, dropletId)
+		droplet, _, _ := client.Droplets.Get(ctx, dropletID)
 		status := droplet.Status
 		if status == "active" {
 			ip, _ := droplet.PublicIPv4()

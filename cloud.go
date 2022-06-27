@@ -6,14 +6,14 @@ import (
 )
 
 // Take env and write to cloud-config
-func CloudInit(config *Config) {
+func cloudInit(config *doConfig) {
 	file := "./cloud-config-tmp"
 	d, _ := ioutil.ReadFile(file)
 
-	UpdateConfig(string(d), config)
+	updatedoConfig(string(d), config)
 }
 
-func UpdateConfig(fileString string, config *Config) {
+func updatedoConfig(fileString string, config *doConfig) {
 	f := fileString
 	f = strings.Replace(f, "<REPO_BRANCH>", config.branch, -1)
 	f = strings.Replace(f, "<REPO_URL>", config.url, 1)
