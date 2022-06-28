@@ -1,0 +1,19 @@
+#cloud-config
+
+package_update: true
+package_upgrade: false
+
+packages:
+  - git
+  - docker.io
+
+groups:
+  - docker
+
+system_info:
+  default_user:
+    groups: [docker]
+
+runcmd:
+  - "docker run -d --restart unless-stopped --privileged -p 80:80 -p 443:443 -e CATTLE_BOOTSTRAP_PASSWORD=<RANCHER_BOOTSTRAP_PASSWORD> <REPO_BRANCH>"
+  - "echo $(date) ': Time to do the stuff'"
