@@ -44,7 +44,13 @@ The build will take around 10 minutes to complete. Once the build is completed y
 
 ### Using Environment Variables  
 
+`dorm` supports assigning environment variables for basic configuration. `dorm` will look for environment variables under `$HOME/.config/dorm/dorm_variables`. Environment variables can also be set in a variety of ways via `~/.profile`, `/etc/profile.d`, `~/.zshrc`, etc...
 
+Supported environment variables:
+
+* `DORM_ENV_ACCESS_TOKEN`: Digital Ocean personal access token 
+
+* `DORM_ENV_SSH_FINGERPRINT`: Fingerprint for your SSH Public Key
 
 ### Accessing your instance
 
