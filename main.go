@@ -17,10 +17,17 @@ type doConfig struct {
 	branch            string
 	rancherVersion    string
 	bootstrapPassword string
+	useMinConfig      bool
 }
+
+const (
+	githubUrl    string = "https://github.com/rancher/dashboard.git"
+	githubBranch string = "master"
+)
 
 func main() {
 	var config doConfig
+	config.useMinConfig = false
 
 	app := &cli.App{
 		Name:    "dorm (Digital Ocean Rancher Manager)",
@@ -61,15 +68,15 @@ func main() {
 			&cli.StringFlag{
 				Name:        "url",
 				Usage:       "Github url to provision",
-				Value:       "https://github.com/rancher/dashboard.git",
-				DefaultText: "https://github.com/rancher/dashboard.git",
+				Value:       githubUrl,
+				DefaultText: githubUrl,
 				Destination: &config.url,
 			},
 			&cli.StringFlag{
 				Name:        "branch",
 				Usage:       "Git branch to target",
-				Value:       "master",
-				DefaultText: "master",
+				Value:       githubBranch,
+				DefaultText: githubBranch,
 				Destination: &config.branch,
 			},
 			&cli.StringFlag{
@@ -88,6 +95,11 @@ func main() {
 		},
 		Action: func(c *cli.Context) error {
 			fmt.Println("Provisioning Digital Ocean Droplet...")
+
+			if config.url == githubUrl && config.branch == githubBranch {
+				config.useMinConfig = true
+			}
+
 			digitalOceanID, ipAddr, _ := createDroplet(&config)
 
 			fmt.Println("Your droplet as been created")
