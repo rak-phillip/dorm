@@ -1,15 +1,28 @@
 package main
 
-import "github.com/joho/godotenv"
+import (
+	"log"
+	"os"
+	"path"
 
-func init() {
-	godotenv.Load()
-}
+	"github.com/joho/godotenv"
+)
 
 func canReadEnv(envVar string) bool {
-	var doEnv map[string]string
-	doEnv, envErr := godotenv.Read()
-	accessToken := doEnv[envVar]
+	godotenv.Load(getUsrHome())
+	err := godotenv.Load()
 
-	return envErr != nil || accessToken == ""
+	accessToken := os.Getenv(envVar)
+
+	return err != nil || accessToken == ""
+}
+
+func getUsrHome() string {
+	usr, err := os.UserHomeDir()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return path.Join(usr, ".config/dorm/dorm_variables")
 }

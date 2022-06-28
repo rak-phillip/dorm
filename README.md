@@ -19,8 +19,8 @@ USAGE:
 
 GLOBAL OPTIONS:
    --droplet-name value        Name for your Droplet
-   --access-token value        Digital Ocean personal access token (default: "c63a4d22e0724ebfc566178c8a858c7f9451240b4b41372a6e0fbaabe4d2bfb8") [$DO_ENV_ACCESS_TOKEN]
-   --ssh-fingerprint value     Fingerprint for SSH Public Key (default: "8c:96:3b:ea:4b:bc:5c:54:2b:11:20:9e:d4:30:3f:c2") [$DO_ENV_SSH_FINGERPRINT]
+   --access-token value        Digital Ocean personal access token (default: "c63a4d22e0724ebfc566178c8a858c7f9451240b4b41372a6e0fbaabe4d2bfb8") [$DORM_ENV_ACCESS_TOKEN]
+   --ssh-fingerprint value     Fingerprint for SSH Public Key (default: "8c:96:3b:ea:4b:bc:5c:54:2b:11:20:9e:d4:30:3f:c2") [$DORM_ENV_SSH_FINGERPRINT]
    --url value                 Github url to provision (default: https://github.com/rancher/dashboard.git)
    --branch value              Git branch to target (default: master)
    --rancher-version value     Target version of Rancher (default: v2.6-head)
@@ -50,6 +50,16 @@ $ ./dorm --droplet-name my-first-rancher-droplet \
 ```
 
 The build will take around 10 minutes to complete. Once the build is completed you can access your Rancher instance at the provided IP.
+
+### Using Environment Variables  
+
+`dorm` supports assigning environment variables for basic configuration. `dorm` will look for environment variables under `$HOME/.config/dorm/dorm_variables`. Environment variables can also be set in a variety of ways via `~/.profile`, `/etc/profile.d`, `~/.zshrc`, etc...
+
+Supported environment variables:
+
+* `DORM_ENV_ACCESS_TOKEN`: Digital Ocean personal access token 
+
+* `DORM_ENV_SSH_FINGERPRINT`: Fingerprint for your SSH Public Key
 
 ### Accessing your instance
 

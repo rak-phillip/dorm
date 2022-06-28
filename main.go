@@ -47,16 +47,16 @@ func main() {
 			&cli.StringFlag{
 				Name:        "access-token",
 				Usage:       "Digital Ocean personal access token",
-				Required:    canReadEnv("DO_ENV_ACCESS_TOKEN"),
+				Required:    canReadEnv("DORM_ENV_ACCESS_TOKEN"),
 				Destination: &config.accessToken,
-				EnvVars:     []string{"DO_ENV_ACCESS_TOKEN"},
+				EnvVars:     []string{"DORM_ENV_ACCESS_TOKEN"},
 			},
 			&cli.StringFlag{
 				Name:        "ssh-fingerprint",
 				Usage:       "Fingerprint for SSH Public Key",
-				Required:    canReadEnv("DO_ENV_SSH_FINGERPRINT"),
+				Required:    canReadEnv("DORM_ENV_SSH_FINGERPRINT"),
 				Destination: &config.sshFingerprint,
-				EnvVars:     []string{"DO_ENV_SSH_FINGERPRINT"},
+				EnvVars:     []string{"DORM_ENV_SSH_FINGERPRINT"},
 			},
 			&cli.StringFlag{
 				Name:        "url",
