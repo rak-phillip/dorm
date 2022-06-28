@@ -17,14 +17,17 @@ NAME:
 USAGE:
    dorm [global options] command [command options] [arguments...]
 
+COMMANDS:
+   help, h  Shows a list of commands or help for one command
+
 GLOBAL OPTIONS:
    --droplet-name value        Name for your Droplet
-   --access-token value        Digital Ocean personal access token (default: "c63a4d22e0724ebfc566178c8a858c7f9451240b4b41372a6e0fbaabe4d2bfb8") [$DORM_ENV_ACCESS_TOKEN]
-   --ssh-fingerprint value     Fingerprint for SSH Public Key (default: "8c:96:3b:ea:4b:bc:5c:54:2b:11:20:9e:d4:30:3f:c2") [$DORM_ENV_SSH_FINGERPRINT]
+   --access-token value        Digital Ocean personal access token [$DO_ENV_ACCESS_TOKEN]
+   --ssh-fingerprint value     Fingerprint for SSH Public Key [$DO_ENV_SSH_FINGERPRINT]
    --url value                 Github url to provision (default: https://github.com/rancher/dashboard.git)
    --branch value              Git branch to target (default: master)
    --rancher-version value     Target version of Rancher (default: v2.6-head)
-   --bootstrap-password value  Bootstrap password for Rancher (default: "d6538231-c73a-4262-a598-5a2fc09dff58")
+   --bootstrap-password value  Bootstrap password for Rancher (default: "587ea425-c55b-4783-9ca8-b79880e77636")
    --help, -h                  show help (default: false)
    --version, -v               print the version (default: false)
 ```
