@@ -4,18 +4,22 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+	"embed"
 )
+
+//go:embed cloud-config-tmp cloud-config-min
+var efs embed.FS
 
 // Take env and write to cloud-config
 func cloudInit(config *doConfig) {
-	var file string = "./cloud-config-tmp"
+	var file string = "cloud-config-tmp"
 
 	if config.useMinConfig == true {
-		fmt.Println("Using config ./cloud-config-min")
-		file = "./cloud-config-min"
+		fmt.Println("Using config cloud-config-min")
+		file = "cloud-config-min"
 	}
 
-	d, _ := ioutil.ReadFile(file)
+	d, _ := efs.ReadFile(file)
 
 	updateDoConfig(string(d), config)
 }
