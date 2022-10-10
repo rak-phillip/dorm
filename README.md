@@ -26,7 +26,7 @@ GLOBAL OPTIONS:
    --ssh-fingerprint value     Fingerprint for SSH Public Key [$DO_ENV_SSH_FINGERPRINT]
    --url value                 Github url to provision (default: https://github.com/rancher/dashboard.git)
    --branch value              Git branch to target (default: master)
-   --rancher-version value     Target version of Rancher (default: v2.6-head)
+   --rancher-version value     Target version of Rancher (default: v2.7-head)
    --bootstrap-password value  Bootstrap password for Rancher (default: "587ea425-c55b-4783-9ca8-b79880e77636")
    --help, -h                  show help (default: false)
    --version, -v               print the version (default: false)
@@ -49,7 +49,7 @@ $ ./dorm --droplet-name my-first-rancher-droplet \
 --ssh-fingerprint { your-ssh-public-key-fingerprint } \
 --url https://github.com/rak-phillip/dashboard.git \
 --branch master \
---rancher-version v2.6-head
+--rancher-version v2.7-head
 ```
 
 The build will take around 10 minutes to complete. Once the build is completed you can access your Rancher instance at the provided IP.
