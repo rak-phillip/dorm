@@ -82,8 +82,8 @@ func main() {
 			&cli.StringFlag{
 				Name:        "rancher-version",
 				Usage:       "Target version of Rancher",
-				Value:       "v2.6-head",
-				DefaultText: "v2.6-head",
+				Value:       "v2.7-head",
+				DefaultText: "v2.7-head",
 				Destination: &config.rancherVersion,
 			},
 			&cli.StringFlag{
