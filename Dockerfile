@@ -8,7 +8,7 @@ RUN yarn --pure-lockfile install
 ENV ROUTER_BASE="/dashboard"
 RUN yarn run build --spa
 
-FROM rancher/rancher:<VERSION>
+FROM <REPOSITORY>:<VERSION>
 WORKDIR /var/lib/rancher
 RUN rm -rf /usr/share/rancher/ui-dashboard/dashboard*
 COPY --from=builder /src/dist /usr/share/rancher/ui-dashboard/dashboard

@@ -18,6 +18,7 @@ type doConfig struct {
 	rancherVersion    string
 	bootstrapPassword string
 	useMinConfig      bool
+	repository        string
 }
 
 const (
@@ -31,7 +32,7 @@ func main() {
 
 	app := &cli.App{
 		Name:    "dorm (Digital Ocean Rancher Manager)",
-		Version: "v0.0.3",
+		Version: "v0.0.4",
 		Authors: []*cli.Author{
 			{
 				Name:  "Phillip Rak",
@@ -82,8 +83,8 @@ func main() {
 			&cli.StringFlag{
 				Name:        "rancher-version",
 				Usage:       "Target version of Rancher",
-				Value:       "v2.7-head",
-				DefaultText: "v2.7-head",
+				Value:       "v2.8.2",
+				DefaultText: "v2.8.2",
 				Destination: &config.rancherVersion,
 			},
 			&cli.StringFlag{
@@ -91,6 +92,13 @@ func main() {
 				Usage:       "Bootstrap password for Rancher",
 				Value:       uuid.New().String(),
 				Destination: &config.bootstrapPassword,
+			},
+			&cli.StringFlag{
+				Name:        "repository",
+				Usage:       "The name of the Docker repository on Docker Hub",
+				Value:       "rancher/rancher",
+				DefaultText: "rancher/rancher",
+				Destination: &config.repository,
 			},
 		},
 		Action: func(c *cli.Context) error {
