@@ -31,7 +31,7 @@ func main() {
 
 	app := &cli.App{
 		Name:    "dorm (Digital Ocean Rancher Manager)",
-		Version: "v0.0.3",
+		Version: "v0.0.4",
 		Authors: []*cli.Author{
 			{
 				Name:  "Phillip Rak",
