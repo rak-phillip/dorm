@@ -18,6 +18,7 @@ type doConfig struct {
 	rancherVersion    string
 	bootstrapPassword string
 	useMinConfig      bool
+	repository        string
 }
 
 const (
@@ -91,6 +92,13 @@ func main() {
 				Usage:       "Bootstrap password for Rancher",
 				Value:       uuid.New().String(),
 				Destination: &config.bootstrapPassword,
+			},
+			&cli.StringFlag{
+				Name:        "repository",
+				Usage:       "The name of the Docker repository on Docker Hub",
+				Value:       "rancher/rancher",
+				DefaultText: "rancher/rancher",
+				Destination: &config.repository,
 			},
 		},
 		Action: func(c *cli.Context) error {

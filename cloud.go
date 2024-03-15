@@ -1,10 +1,10 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"io/ioutil"
 	"strings"
-	"embed"
 )
 
 //go:embed cloud-config-tmp cloud-config-min
@@ -29,6 +29,7 @@ func updateDoConfig(fileString string, config *doConfig) {
 	f = strings.Replace(f, "<REPO_BRANCH>", config.branch, -1)
 	f = strings.Replace(f, "<REPO_URL>", config.url, 1)
 	f = strings.Replace(f, "<RANCHER_VERSION>", config.rancherVersion, 1)
+	f = strings.Replace(f, "<DOCKER_HUB_REPOSITORY>", config.repository, 1)
 	f = strings.Replace(f, "<RANCHER_BOOTSTRAP_PASSWORD>", config.bootstrapPassword, 1)
 
 	data := []byte(f)
